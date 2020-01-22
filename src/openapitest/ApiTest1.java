@@ -1,6 +1,7 @@
 package openapitest;
-/* Java »ùÇÃ ÄÚµå */
 
+/* Java ìƒ˜í”Œ ì½”ë“œ */
+//ì˜ì•½í’ˆ ì œí’ˆ í—ˆê°€ì •ë³´ ì„œë¹„ìŠ¤
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -11,13 +12,19 @@ import java.io.IOException;
 
 public class ApiTest1 {
     public static void main(String[] args) throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471057/MdcinPrductPrmisnInfoService/getMdcinPrductIrdntItem"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=¼­ºñ½ºÅ°"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("Entrps_prmisn_no","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*¾÷Ã¼Çã°¡¹øÈ£*/
-        urlBuilder.append("&" + URLEncoder.encode("Prduct","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*Á¦Ç°¸í(ÇÑ±Û)*/
-        urlBuilder.append("&" + URLEncoder.encode("Entrps","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*¾÷Ã¼¸í*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*ÆäÀÌÁö ¹øÈ£*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*ÇÑ ÆäÀÌÁö °á°ú¼ö*/
+//        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471057/MdcinPrductPrmisnInfoService/getMdcinPrductItem?ServiceKey=ZKFsCUlqXQ5uj8UWlf2vKELmJFaheX2Hn1en%2Fnkk%2BnvoS7LTXxEmoSG%2FMZTf3qCCRxlxaCFgSX36x1vR4T8CPQ%3D%3D&numOfRows=3&pageNo=1&bar_code=8806436055414"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471057/MdcinPrductPrmisnInfoService/getMdcinPrductItem"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=ZKFsCUlqXQ5uj8UWlf2vKELmJFaheX2Hn1en%2Fnkk%2BnvoS7LTXxEmoSG%2FMZTf3qCCRxlxaCFgSX36x1vR4T8CPQ%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("item_name","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*í’ˆëª©ëª…*/
+        urlBuilder.append("&" + URLEncoder.encode("entp_name","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*ì—…ì²´ëª…*/
+        urlBuilder.append("&" + URLEncoder.encode("item_permit_date","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*í—ˆê°€ì¼ì*/
+        urlBuilder.append("&" + URLEncoder.encode("entp_no","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*ì—…ì²´í—ˆê°€ë²ˆí˜¸*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*í˜ì´ì§€ ë²ˆí˜¸*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*í•œ í˜ì´ì§€ ê²°ê³¼ìˆ˜*/
+        urlBuilder.append("&" + URLEncoder.encode("bar_code","UTF-8") + "=" + URLEncoder.encode("8806433032005", "UTF-8")); /*í‘œì¤€ì½”ë“œ*/
+        urlBuilder.append("&" + URLEncoder.encode("item_seq","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*í’ˆëª©ê¸°ì¤€ì½”ë“œ*/
+        urlBuilder.append("&" + URLEncoder.encode("start_change_date","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*ë³€ê²½ì¼ìì‹œì‘ì¼*/
+        urlBuilder.append("&" + URLEncoder.encode("end_change_date","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*ë³€ê²½ì¼ìì¢…ë£Œì¼*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -39,4 +46,3 @@ public class ApiTest1 {
         System.out.println(sb.toString());
     }
 }
-
