@@ -1,16 +1,14 @@
+*swing ê¸°ë³¸ ì°½ ë„ìš°ê¸°
 
-*swing ±âº» Ã¢ ¶ç¿ì±â
-
- - Java Project »ý¼º 
- - Å¬·¡½º ÆÄÀÏ µÎ°³ »ý¼º (ex:Main.java, Program.java)
- - ¸ÞÀÎ Å¬·¡½º ÆÄÀÏ¿¡ new ¼­ºêÅ¬·¡½ºÀÌ¸§(); --> ÀÌÀ¯ Ã£¾ÆºÁ¾ß µÉ µí..
- - ¼­ºê Å¬·¡½º ÆÄÀÏ¿¡ jframe »ó¼Ó 
- - »ý¼ºÀÚ ¼±¾ð
+ - Java Project ìƒì„± 
+ - í´ëž˜ìŠ¤ íŒŒì¼ ë‘ê°œ ìƒì„± (ex:Main.java, Program.java)
+ - ë©”ì¸ í´ëž˜ìŠ¤ íŒŒì¼ì— new ì„œë¸Œí´ëž˜ìŠ¤ì´ë¦„(); --> ì´ìœ  ì°¾ì•„ë´ì•¼ ë  ë“¯..
+ - ì„œë¸Œ í´ëž˜ìŠ¤ íŒŒì¼ì— jframe ìƒì† 
+ - ìƒì„±ìž ì„ ì–¸
  
-*JFrame Å©±â ¼³Á¤
- 1. setSize(xÅ©±â,yÅ©±â) JFrameÅ©±â
- 2. setResizable(false) Ã¢ÀÇ Å©±â¸¦ º¯°æÇÏÁö ¸øÇÏ°Ô ÇØÁÝ´Ï´Ù.(true´Â °¡´ÉÇÏ°Ô ÇØÁÝ´Ï´Ù.)
- 3. setVisible(true) Ã¢ÀÌ º¸ÀÌ°Ô ÇØÁÝ´Ï´Ù.
- 4. setLocationRelativeTo(null) Ã¢ÀÌ °¡¿îµ¥ ³ª¿À°Ô ÇØÁÝ´Ï´Ù.
-  ÃâÃ³: https://intunknown.tistory.com/296 [´À±ßÇÑ ÁÖÀÎÀå]
-		 		
+*JFrame í¬ê¸° ì„¤ì •
+ 1. setSize(xí¬ê¸°,yí¬ê¸°) JFrameí¬ê¸°
+ 2. setResizable(false) ì°½ì˜ í¬ê¸°ë¥¼ ë³€ê²½í•˜ì§€ ëª»í•˜ê²Œ í•´ì¤ë‹ˆë‹¤.(trueëŠ” ê°€ëŠ¥í•˜ê²Œ í•´ì¤ë‹ˆë‹¤.)
+ 3. setVisible(true) ì°½ì´ ë³´ì´ê²Œ í•´ì¤ë‹ˆë‹¤.
+ 4. setLocationRelativeTo(null) ì°½ì´ ê°€ìš´ë° ë‚˜ì˜¤ê²Œ í•´ì¤ë‹ˆë‹¤.
+  ì¶œì²˜: https://intunknown.tistory.com/296 [ëŠê¸‹í•œ ì£¼ì¸ìž¥]

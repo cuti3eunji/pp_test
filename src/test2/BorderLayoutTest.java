@@ -9,40 +9,40 @@ import javax.swing.JFrame;
 public class BorderLayoutTest {
 
 	static class setGUI extends JFrame{
-		// »ı¼ºÀÚ¸¦ ÅëÇØ GUI ÃÊ±â ¼¼ÆÃÀ» ÇØÁØ´Ù.
+		// ìƒì„±ìë¥¼ í†µí•´ GUI ì´ˆê¸° ì„¸íŒ…ì„ í•´ì¤€ë‹¤.
 		setGUI(){
 		    
-	    // À©µµ¿ì Á¦¸ñ(Title)À» »ı¼º
+	    // ìœˆë„ìš° ì œëª©(Title)ì„ ìƒì„±
 		setTitle("GUI TITLE");
 		
-		// ÀÌ ºÎºĞºÎÅÍ ¿øÇÏ´Â ¹öÆ°, ·¹ÀÌºí, ÄŞº¸¹Ú½º µîµî ¼³Á¤
-		//BorderLayout(¼öÆò°£°İ,¼öÁ÷°£°İ)
+		// ì´ ë¶€ë¶„ë¶€í„° ì›í•˜ëŠ” ë²„íŠ¼, ë ˆì´ë¸”, ì½¤ë³´ë°•ìŠ¤ ë“±ë“± ì„¤ì •
+		//BorderLayout(ìˆ˜í‰ê°„ê²©,ìˆ˜ì§ê°„ê²©)
         this.setLayout(new BorderLayout(20,20));
         
-//        JButton btn1 = new JButton("¹öÆ°1");    
+//        JButton btn1 = new JButton("ë²„íŠ¼1");    
 //        this.add(btn1, BorderLayout.NORTH);        
 //        
-//        JButton btn2 = new JButton("¹öÆ°2");  
+//        JButton btn2 = new JButton("ë²„íŠ¼2");  
 //        this.add(btn2, BorderLayout.WEST);          
 //        
-        JButton btn3 = new JButton("¹öÆ°3");  
+        JButton btn3 = new JButton("ë²„íŠ¼3");  
         this.add(btn3, BorderLayout.CENTER);
         
-//        JButton btn4 = new JButton("¹öÆ°4");
+//        JButton btn4 = new JButton("ë²„íŠ¼4");
 //        this.add(btn4, BorderLayout.EAST);
 //        
-//        JButton btn5 = new JButton("¹öÆ°5");  
+//        JButton btn5 = new JButton("ë²„íŠ¼5");  
 //        this.add(btn5, BorderLayout.SOUTH);  
 
 
 		
-		// Á¾·á ¹öÆ° »ı¼º
+		// ì¢…ë£Œ ë²„íŠ¼ ìƒì„±
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// À©µµ¿ì Ã¢ Å©±â ¼³Á¤(°¡·Î, ¼¼·Î)
+		// ìœˆë„ìš° ì°½ í¬ê¸° ì„¤ì •(ê°€ë¡œ, ì„¸ë¡œ)
 		setSize(500, 500);
 		
-		// ÀÌ ¸Ş¼Òµå¸¦ ÀÌ¿ëÇØ¾ß À©µµ¿ì Ã¢ÀÌ ³ªÅ¸³­´Ù.
+		// ì´ ë©”ì†Œë“œë¥¼ ì´ìš©í•´ì•¼ ìœˆë„ìš° ì°½ì´ ë‚˜íƒ€ë‚œë‹¤.
 		setVisible(true);
 		
 		setLocationRelativeTo(null);
@@ -57,5 +57,3 @@ public class BorderLayoutTest {
 	}
 
 }
-
-

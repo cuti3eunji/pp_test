@@ -2,16 +2,16 @@ package test;
 
 import javax.swing.JFrame;
 
-public class A_Program extends JFrame{	//JFrame »ó¼Ó
-	public A_Program() {	//»ı¼ºÀÚ 
-		setTitle("TEST-TITLE");	//Å¸ÀÌÆ² ¼³Á¤
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//Ã¢À» ´İÀ» ½Ã ÇÁ·Î±×·¥(JFrame)ÀÌ Á¤»ó Á¾·á µÇµµ·Ï ÇÔ
+public class A_Program extends JFrame{	//JFrame ìƒì†
+	public A_Program() {	//ìƒì„±ì 
+		setTitle("TEST-TITLE");	//íƒ€ì´í‹€ ì„¤ì •
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//ì°½ì„ ë‹«ì„ ì‹œ í”„ë¡œê·¸ë¨(JFrame)ì´ ì •ìƒ ì¢…ë£Œ ë˜ë„ë¡ í•¨
 		
-		//JFrame Å©±â ¼³Á¤
-		setSize(1280,720);		//JFrameÀÇ Å©±â setSize(x,y)
-		setResizable(false);	//Ã¢ÀÇ Å©±â º¯°æ ºÒ°¡ - true´Â º¯°æ °¡´É ----> ±âº» true
-		setLocationRelativeTo(null);	//°¡¿îµ¥¿¡ Ã¢ÀÌ ¶ßµµ·Ï ÇÔ
-		setVisible(true);		//Ã¢ÀÌ º¸ÀÌ°Ô ÇÔ
+		//JFrame í¬ê¸° ì„¤ì •
+		setSize(1280,720);		//JFrameì˜ í¬ê¸° setSize(x,y)
+		setResizable(false);	//ì°½ì˜ í¬ê¸° ë³€ê²½ ë¶ˆê°€ - trueëŠ” ë³€ê²½ ê°€ëŠ¥ ----> ê¸°ë³¸ true
+		setLocationRelativeTo(null);	//ê°€ìš´ë°ì— ì°½ì´ ëœ¨ë„ë¡ í•¨
+		setVisible(true);		//ì°½ì´ ë³´ì´ê²Œ í•¨
 	}
 	
 }

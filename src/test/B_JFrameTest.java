@@ -8,22 +8,22 @@ import javax.swing.JFrame;
 public class B_JFrameTest {
 
 	static class setGUI extends JFrame{
-		// »ý¼ºÀÚ¸¦ ÅëÇØ GUI ÃÊ±â ¼¼ÆÃÀ» ÇØÁØ´Ù.
+		// ìƒì„±ìžë¥¼ í†µí•´ GUI ì´ˆê¸° ì„¸íŒ…ì„ í•´ì¤€ë‹¤.
 		setGUI(){
 		    
-	    // À©µµ¿ì Á¦¸ñ(Title)À» »ý¼º
+	    // ìœˆë„ìš° ì œëª©(Title)ì„ ìƒì„±
 		setTitle("GUI TITLE");
 		
-		// ÀÌ ºÎºÐºÎÅÍ ¿øÇÏ´Â ¹öÆ°, ·¹ÀÌºí, ÄÞº¸¹Ú½º µîµî ¼³Á¤
+		// ì´ ë¶€ë¶„ë¶€í„° ì›í•˜ëŠ” ë²„íŠ¼, ë ˆì´ë¸”, ì½¤ë³´ë°•ìŠ¤ ë“±ë“± ì„¤ì •
         
 		
-		// Á¾·á ¹öÆ° »ý¼º
+		// ì¢…ë£Œ ë²„íŠ¼ ìƒì„±
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// À©µµ¿ì Ã¢ Å©±â ¼³Á¤(°¡·Î, ¼¼·Î)
+		// ìœˆë„ìš° ì°½ í¬ê¸° ì„¤ì •(ê°€ë¡œ, ì„¸ë¡œ)
 		setSize(500, 500);
 		
-		// ÀÌ ¸Þ¼Òµå¸¦ ÀÌ¿ëÇØ¾ß À©µµ¿ì Ã¢ÀÌ ³ªÅ¸³­´Ù.
+		// ì´ ë©”ì†Œë“œë¥¼ ì´ìš©í•´ì•¼ ìœˆë„ìš° ì°½ì´ ë‚˜íƒ€ë‚œë‹¤.
 		setVisible(true);
 		
 		setLocationRelativeTo(null);
@@ -38,5 +38,3 @@ public class B_JFrameTest {
 	}
 
 }
-
-

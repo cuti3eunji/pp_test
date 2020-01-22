@@ -12,28 +12,28 @@ import javax.swing.JTextField;
 
 public class C_JFrameTest {
 	public static void main(String[] args) {
-		Dimension dim = new Dimension(400,150);//Å©±â ÁöÁ¤
+		Dimension dim = new Dimension(400,150);//í¬ê¸° ì§€ì •
 		
-		JFrame jf = new JFrame("Å¸ÀÌÆ²");
+		JFrame jf = new JFrame("íƒ€ì´í‹€");
 //		jf.setLocation(200,400);
 		jf.setLocationRelativeTo(null);
-		jf.setPreferredSize(dim);	//Å©±â ÁöÁ¤
+		jf.setPreferredSize(dim);	//í¬ê¸° ì§€ì •
 		
 		
 		//
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
-		panel1.add(new JLabel("ÀÌ¸§ : "));
+		panel1.add(new JLabel("ì´ë¦„ : "));
 		panel1.add(new JTextField());
 		
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-		panel2.add(new JLabel("³ªÀÌ : "));
+		panel2.add(new JLabel("ë‚˜ì´ : "));
 		panel2.add(new JTextField());
 		
 		JPanel panel3 = new JPanel();
 		panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-		panel3.add(new JLabel("ÁÖ¼Ò : "));
+		panel3.add(new JLabel("ì£¼ì†Œ : "));
 		panel3.add(new JTextField());
 		
 		
@@ -45,8 +45,8 @@ public class C_JFrameTest {
 		mp.add(panel3);
 		
 		jf.add(mp, BorderLayout.CENTER);
-		jf.add(new JButton("ÀÔ·ÂÇÏ±â"), BorderLayout.SOUTH);
-		jf.pack();	//ÇÁ·¹ÀÓ³»¿¡ ¼­ºêÄÄÆ÷³ÍÆ®µéÀÇ ·¹ÀÌ¾Æ¿ô°ú Preferred Size¿¡ ¸Âµµ·Ï À©µµ¿ìÀÇ »çÀÌÁî¸¦ ¸ÂÃß´Â ÀÛ¾÷ÀÌ´Ù.
+		jf.add(new JButton("ì…ë ¥í•˜ê¸°"), BorderLayout.SOUTH);
+		jf.pack();	//í”„ë ˆì„ë‚´ì— ì„œë¸Œì»´í¬ë„ŒíŠ¸ë“¤ì˜ ë ˆì´ì•„ì›ƒê³¼ Preferred Sizeì— ë§ë„ë¡ ìœˆë„ìš°ì˜ ì‚¬ì´ì¦ˆë¥¼ ë§ì¶”ëŠ” ì‘ì—…ì´ë‹¤.
 		jf.setVisible(true);
 	}
 
