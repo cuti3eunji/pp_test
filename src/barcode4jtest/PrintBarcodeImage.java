@@ -139,7 +139,7 @@ public class PrintBarcodeImage implements Printable {
 	
 	/**
 	 * 바코드 생성
-	 * 
+	 * -
 	 * @param barcodeType
 	 * @param barcodeData
 	 * @param scaleY 

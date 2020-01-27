@@ -40,7 +40,7 @@ public class DrawCanvasBarcodeImage extends JPanel {
 		 * "codabar", "code39", "postnet", "intl2of5", "ean-128"
 		 * "royal-mail-cbc", "ean-13", "itf-14", "datamatrix", "code128"
 		 * "pdf417", "upc-a", "upc-e", "usps4cb", "ean-8", "ean-13" */
-		String barcodeType = "ean-13";
+		String barcodeType = "datamatrix";
 
 		/* 바코드 데이터 */
 		String barcodeData = "8901138509231";
