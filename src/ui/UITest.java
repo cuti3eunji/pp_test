@@ -38,12 +38,9 @@ public class UITest {
 		printPanel.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
 		printPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10), "바코드 출력하기"));
 
-
-		
 		JButton printBtn = new JButton("프린트");	//프린트 버튼
 		printBtn.setPreferredSize(new Dimension(100,20));
-		final JTextField inputField = new JTextField();
-//		inputField.setPreferredSize(new Dimension(10,40));
+		final JTextField printInputField = new JTextField();
 
 		//프린트 버튼 클릭시 이벤트 처리
 		printBtn.addActionListener(new ActionListener() {
@@ -51,31 +48,52 @@ public class UITest {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton btn = (JButton) e.getSource();
-				if(inputField.getText() != null && inputField.getText().length() != 0) { //input값이 빈칸이 아닐때
-					btn.setText(inputField.getText());
-				}else { //빈칸일 경우 경고창?
+//				System.out.println("e.getSource() => " + btn.getText());
+//				System.out.println("printInputField.getText() ==> " + printInputField.getText());
+				if(printInputField.getText() != null && printInputField.getText().length() != 0) { //input값이 빈칸이 아닐때
+					btn.setText(printInputField.getText());
+					
+					//***인식한 바코드의 Check Digit 확인 후 바코드가 잘못됐는지 확인
+					// -> 
+					
+				}else { //빈칸
 					
 				}
 				
 			}
 		});
 		
-		
 		printPanel.setLayout(new BoxLayout(printPanel, BoxLayout.X_AXIS));
 		printPanel.add(new JLabel());
-		printPanel.add(inputField);
+		printPanel.add(printInputField);
 		printPanel.add(printBtn);
 		
 		// 바코드 정보 검색
 		JPanel searchPanel = new JPanel();
 		searchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10), "바코드 정보 확인"));
 
-		JButton searchBtn = new JButton("확인");
+		JButton searchBtn = new JButton("확인"); //정보 검색 버튼
 		searchBtn.setPreferredSize(new Dimension(100,20));
+		final JTextField searchInputField = new JTextField();
+
+		searchBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton btn = (JButton) e.getSource();
+				if(searchInputField.getText() != null && searchInputField.getText().length() != 0) {
+					btn.setText(searchInputField.getText());
+					
+					//****API사용해서 해당 바코드의 정보를 불러온다.. -> 가져온 정보를 infoPanel에 infoArea부분에 출력 
+					
+				}
+			}
+		});
+		
 		
 		searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
 		searchPanel.add(new JLabel());
-		searchPanel.add(new JTextField());
+		searchPanel.add(searchInputField);
 		searchPanel.add(searchBtn);
 		
 		//바코드 정보 출력
@@ -96,45 +114,12 @@ public class UITest {
 		mainPanel.add(infoPanel);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		jf.add(mainPanel, BorderLayout.CENTER);
 		jf.pack();
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//창을 닫을 시 프로그램(JFrame)이 정상 종료 되도록 함
 		jf.setLocationRelativeTo(null);
 
-	}
-
-	/**
-	 * 바코드 생성
-	 * 
-	 * @param barcodeType
-	 * @param barcodeData
-	 * @param scaleY 
-	 * @param scaleX 
-	 * @param dpi
-	 */
-	private void createBarcode(Graphics g, String barcodeType, String barcodeData, int x, int y,  int scaleX, int scaleY) throws Exception {
-		AbstractBarcodeBean bean = null;
-		
-		BarcodeClassResolver resolver = new DefaultBarcodeClassResolver();
-		Class clazz = resolver.resolveBean(barcodeType);
-		bean = (AbstractBarcodeBean) clazz.newInstance();
-		bean.doQuietZone(true);
-
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(x, y); 			/* 좌표 지정 */
-		g2d.scale(scaleX, scaleY); 				/* 크기 지정 */
-
-		Java2DCanvasProvider j2dp = new Java2DCanvasProvider(g2d, 0);
-		bean.generateBarcode(j2dp, barcodeData);
 	}
 	
 }
