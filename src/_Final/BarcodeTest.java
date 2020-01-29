@@ -128,14 +128,22 @@ public class BarcodeTest implements ActionListener{
 			if(barcodeNum.indexOf("0") == 0) { //barcodeNum 첫 자리가 0일 때 (indexOf("찾는문자") : 찾는 문자가 있으면 0 반환)
 				barcodeNum = barcodeNum.substring(1);
 			}
-			String country = barcodeNum.substring(0,3);
-			String company = barcodeNum.substring(3,7);
+			String country = barcodeNum.substring(0,3);	//국가
+			String company = barcodeNum.substring(3,7); //회사
 			String prod = barcodeNum.substring(7,12);	//제품코드
 			String pCode = prod.substring(0,4);	//함량포함한품목코드
 			String packingUnit = String.valueOf(prod.charAt(prod.length()-1));	//포장단위
 			
-			if(barcodeNum.equals("8806416055519") || barcodeNum.equals("8806416055502")) {
+//			if(barcodeNum.equals("8806416055519") || barcodeNum.equals("8806416055502")) {
+//				country = "한국";
+//				company = "(주)대웅제약";
+//			}
+
+			if(country.equals("880")) {
 				country = "한국";
+			}
+			
+			if(company.equals("6416")) {
 				company = "(주)대웅제약";
 			}
 
