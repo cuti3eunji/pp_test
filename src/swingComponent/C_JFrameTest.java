@@ -1,4 +1,4 @@
-package test;
+package swingComponent;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

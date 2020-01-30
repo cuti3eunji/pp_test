@@ -1,4 +1,4 @@
-package barcode4jtest;
+package barcode4j;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

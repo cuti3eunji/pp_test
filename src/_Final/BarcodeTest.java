@@ -27,6 +27,8 @@ import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 
+import fileio.FileModify;
+
 public class BarcodeTest implements ActionListener{
 	JButton printBtn, searchBtn;
 	JTextField barcodeInputField;

@@ -1,4 +1,4 @@
-package barcode4jtest;
+package barcode4j;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;

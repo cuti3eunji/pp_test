@@ -1,11 +1,12 @@
-package test2;
+package swingLayout;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class FlowLayoutTest {
+public class BorderLayoutTest {
 
 	static class setGUI extends JFrame{
 		// 생성자를 통해 GUI 초기 세팅을 해준다.
@@ -15,31 +16,25 @@ public class FlowLayoutTest {
 		setTitle("GUI TITLE");
 		
 		// 이 부분부터 원하는 버튼, 레이블, 콤보박스 등등 설정
-		// FlowLayout을 이용한다.
-        this.setLayout(new FlowLayout());
+		//BorderLayout(수평간격,수직간격)
+        this.setLayout(new BorderLayout(20,20));
         
-        JButton btn1 = new JButton("버튼1");    
-        this.add(btn1);        
-        
-        JButton btn2 = new JButton("버튼2");  
-        this.add(btn2);          
-        
+//        JButton btn1 = new JButton("버튼1");    
+//        this.add(btn1, BorderLayout.NORTH);        
+//        
+//        JButton btn2 = new JButton("버튼2");  
+//        this.add(btn2, BorderLayout.WEST);          
+//        
         JButton btn3 = new JButton("버튼3");  
-        this.add(btn3);          
+        this.add(btn3, BorderLayout.CENTER);
         
-        JButton btn4 = new JButton("버튼4");
-        this.add(btn4);        
-        
-        JButton btn5 = new JButton("버튼5");  
-        this.add(btn5);      
+//        JButton btn4 = new JButton("버튼4");
+//        this.add(btn4, BorderLayout.EAST);
+//        
+//        JButton btn5 = new JButton("버튼5");  
+//        this.add(btn5, BorderLayout.SOUTH);  
 
-        JButton btn6 = new JButton("버튼6");
-        this.add(btn6);
 
-        JButton btn7 = new JButton("버튼7");
-        this.add(btn7);
-
-        
 		
 		// 종료 버튼 생성
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

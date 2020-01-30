@@ -1,4 +1,4 @@
-package fileIOTest;
+package fileio;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

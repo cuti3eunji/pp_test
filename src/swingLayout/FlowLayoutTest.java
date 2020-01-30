@@ -1,11 +1,11 @@
-package test2;
+package swingLayout;
 
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class GridLayoutTest {
+public class FlowLayoutTest {
 
 	static class setGUI extends JFrame{
 		// 생성자를 통해 GUI 초기 세팅을 해준다.
@@ -15,8 +15,8 @@ public class GridLayoutTest {
 		setTitle("GUI TITLE");
 		
 		// 이 부분부터 원하는 버튼, 레이블, 콤보박스 등등 설정
-		   // GridLayout을 이용하고 수평, 수직 간격을 3px로 한다.
-        this.setLayout(new GridLayout(3,3));
+		// FlowLayout을 이용한다.
+        this.setLayout(new FlowLayout());
         
         JButton btn1 = new JButton("버튼1");    
         this.add(btn1);        

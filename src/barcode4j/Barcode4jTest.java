@@ -1,9 +1,8 @@
-package test;
+package barcode4j;
 
-public class A_Main {
+public class Barcode4jTest {
 
 	public static void main(String[] args) {
-		new A_Program();
 
 	}
 

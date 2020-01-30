@@ -1,4 +1,4 @@
-package test;
+package swingComponent;
 
 import javax.swing.JFrame;
 

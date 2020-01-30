@@ -1,4 +1,4 @@
-package openapitest;
+package openapi;
 
 /* Java 샘플 코드 */
 

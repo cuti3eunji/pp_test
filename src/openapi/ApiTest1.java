@@ -1,4 +1,4 @@
-package openapitest;
+package openapi;
 
 /* Java 샘플 코드 */
 //의약품 제품 허가정보 서비스
