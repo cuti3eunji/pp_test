@@ -56,7 +56,7 @@ public class BarcodeTest implements ActionListener{
 		// inputPanel
 		JPanel inputPanel = new JPanel();	//프린트용 panel
 		inputPanel.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
-		inputPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10), "BARCODE 바코드"));
+		inputPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10), "바코드"));
 	
 		barcodeInputField = new JTextField(14);
 		

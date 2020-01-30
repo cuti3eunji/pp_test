@@ -1,4 +1,4 @@
-package swingComponent;
+package swingBasic;
 
 public class A_Main {
 
