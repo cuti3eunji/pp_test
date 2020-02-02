@@ -20,6 +20,9 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.onbarcode.barcode.DataMatrix;
+import com.onbarcode.barcode.IBarcode;
+
 public class ResetUI {
 	JButton printBtn, searchBtn;
 	JTextField barcodeInputField;
@@ -80,7 +83,7 @@ public class ResetUI {
 		gtinPanel.setLayout(new BoxLayout(gtinPanel, BoxLayout.X_AXIS));
 		
 		String[] prod = new String[] {"-- 상품명을 선택하세요. --", "이지엔6이브연질캡슐", "표준코드 직접입력"};
-		JComboBox<String> gtinCombo = new JComboBox<String>(prod);
+		final JComboBox<String> gtinCombo = new JComboBox<String>(prod);
 
 		final JTextField gtin = new JTextField();
 		gtin.setEditable(false);	//수정불가능
@@ -101,6 +104,7 @@ public class ResetUI {
 			public void actionPerformed(ActionEvent e) {
 
 				if(gtinCombo.getSelectedItem().equals("표준코드 직접입력")) {
+					
 					gtin.setEditable(true); //수정가능
 				}else {
 					gtin.setEditable(false);
@@ -114,7 +118,7 @@ public class ResetUI {
 		JPanel useDatePanel = new JPanel();
 		useDatePanel.setLayout(new BoxLayout(useDatePanel, BoxLayout.X_AXIS));
 		
-		JTextField useDate = new JTextField();
+		final JTextField useDate = new JTextField();
 		
 		useDatePanel.add(new JLabel("유효기한 (17)  "));
 		useDatePanel.add(useDate);
@@ -123,7 +127,7 @@ public class ResetUI {
 		JPanel makingNumPanel = new JPanel();
 		makingNumPanel.setLayout(new BoxLayout(makingNumPanel, BoxLayout.X_AXIS));
 
-		JTextField makingNum = new JTextField();
+		final JTextField makingNum = new JTextField();
 		
 		makingNumPanel.add(new JLabel("제조번호 (10)  "));
 		makingNumPanel.add(makingNum);
@@ -132,7 +136,7 @@ public class ResetUI {
 		JPanel serialNumPanel = new JPanel();
 		serialNumPanel.setLayout(new BoxLayout(serialNumPanel, BoxLayout.X_AXIS));
 		
-		JTextField serialNum = new JTextField();
+		final JTextField serialNum = new JTextField();
 
 		serialNumPanel.add(new JLabel("일련번호 (21)  "));
 		serialNumPanel.add(serialNum);
@@ -164,7 +168,58 @@ public class ResetUI {
 
 		JButton imgSaveBtn = new JButton("이미지로 저장");
 		JButton imgPrintBtn = new JButton("이미지 인쇄");
+		
+		//이미지로 저장 버튼을 눌렀을 때 이벤트
+		imgSaveBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DataMatrix barcode = new DataMatrix();
+				
+				/*
+				   Data Matrix Valid data char set:
+				        ASCII values 0 - 127 in accordance with the US national version of ISO/IEC 646
+				            ASCII values 128 - 255 in accordance with ISO 8859-1. These are referred to as extended ASCII.
+				
+				*/
+				barcode.setData("112233445566");
+				
+				barcode.setDataMode(DataMatrix.M_AUTO);
+				
+				// if your selected format mode doesnot have enough space to encode your data,
+				// the library will choose the right format mode for you automatically.
+				barcode.setFormatMode(DataMatrix.F_10X10);
+				
+				//  Set the processTilde property to true, if you want use the tilde character "~" to specify special characters in the input data. Default is false.
+				//  1-byte character: ~ddd (character value from 0 ~ 255)
+				//  ASCII (with EXT): from ~000 to ~255
+				//  2-byte character: ~6ddddd (character value from 0 ~ 65535)
+				//  Unicode: from ~600000 to ~665535
+				//  ECI: from ~7000000 to ~7999999
+				barcode.setProcessTilde(true);
+				
+				// Data Matrix Unit of Measure, pixel, cm, or inch
+				barcode.setUom(IBarcode.UOM_PIXEL);
+				// Data Matrix barcode bar module width (X) in pixel
+				barcode.setX(3f);
+				
+				barcode.setLeftMargin(10f);
+				barcode.setRightMargin(10f);
+				barcode.setTopMargin(10f);
+				barcode.setBottomMargin(10f);
+				// barcode image resolution in dpi
+				barcode.setResolution(72);
+				
+				try {
+					barcode.drawBarcode("D:\\2020\\barcode\\datamatrix.gif");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
+			}
+		});
+		
 		preBtnPanel.add(imgSaveBtn);
 		preBtnPanel.add(imgPrintBtn);
 		

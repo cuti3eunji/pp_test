@@ -19,13 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.zebra.sdk.comm.Connection;
-import com.zebra.sdk.comm.ConnectionException;
-import com.zebra.sdk.comm.TcpConnection;
-import com.zebra.sdk.printer.PrinterLanguage;
-import com.zebra.sdk.printer.ZebraPrinter;
-import com.zebra.sdk.printer.ZebraPrinterFactory;
-import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+//import com.zebra.sdk.comm.Connection;
+//import com.zebra.sdk.comm.ConnectionException;
+//import com.zebra.sdk.comm.TcpConnection;
+//import com.zebra.sdk.printer.PrinterLanguage;
+//import com.zebra.sdk.printer.ZebraPrinter;
+//import com.zebra.sdk.printer.ZebraPrinterFactory;
+//import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 
 import fileio.FileModify;
 
@@ -199,17 +199,17 @@ public class BarcodeTest implements ActionListener{
 	
 	public void printBarcode(byte[] byteBarcode) {
 		//프린터연결
-		Connection connection = new TcpConnection("192.168.1.154", TcpConnection.DEFAULT_ZPL_TCP_PORT);
-		try {
-			connection.open(); // 연결
-
-			connection.write(byteBarcode); // 파일인쇄
-			
-			connection.close(); // 연결 해제
-			
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-		} 
+//		Connection connection = new TcpConnection("192.168.1.154", TcpConnection.DEFAULT_ZPL_TCP_PORT);
+//		try {
+//			connection.open(); // 연결
+//
+//			connection.write(byteBarcode); // 파일인쇄
+//			
+//			connection.close(); // 연결 해제
+//			
+//		} catch (ConnectionException e) {
+//			e.printStackTrace();
+//		} 
 	}
 	
 }
