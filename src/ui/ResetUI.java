@@ -324,26 +324,34 @@ public class ResetUI implements ActionListener{
 			barcodeNum = gtin.getText().trim();
 			
 			if(barcodeNum.length() < 14 ) {	// 자릿수 확인해서 14자리 미만이면 앞에 0을 붙여줌
-				barcodeNum = String.format("%014d", Long.parseLong(barcodeNum));
+				barcodeNum = "01" + String.format("%014d", Long.parseLong(barcodeNum));
 			}
 			
 			if(inputCheck(gtin.getText(), useDate.getText(), makingNum.getText(), serialNum.getText())) {	//자릿수 + 널체크
 				System.out.println(barcodeNum.length());
 				
 				int chkSum = checkDigit(barcodeNum);
-				if(chkSum != Integer.parseInt(String.valueOf(barcodeNum.charAt(barcodeNum.length()-1)))) {
-					JOptionPane.showMessageDialog(null, "잘못된 바코드 입니다. 다시 입력해주세요.");
-					return;
-				}
-
-				String barcodeData = gtin.getText();
+//				if(chkSum != Integer.parseInt(String.valueOf(barcodeNum.charAt(barcodeNum.length()-1)))) {
+//					JOptionPane.showMessageDialog(null, "잘못된 바코드 입니다. 다시 입력해주세요.");
+//					return;
+//				}
 				
-				System.out.println(barcodeData);
+//				String barcodeData = gtin.getText();
 				
-				byte separator = 0x1D;
+				System.out.println(barcodeNum);
+				
+				byte separator = 0x1D; 
 				byte fncst = (byte) 0xE8;
 				
-				byte[] buffers = barcodeData.getBytes();
+				byte[] buffers = barcodeNum.getBytes();
+				
+				byte[] tempbytes = new byte[buffers.length+1];
+				tempbytes[0] = separator;
+				for(int i=0; i<buffers.length; i++) {
+					tempbytes[i+1] = buffers[i];
+				}
+				
+				String bt = new String(tempbytes);
 				
 				
 //				String str1 = “Hello World!”;
@@ -362,8 +370,6 @@ public class ResetUI implements ActionListener{
 
 
 
-				출처: https://roadrunner.tistory.com/139 [삶의 조각들]
-				
 				//파일명 생성
 				SimpleDateFormat format = new SimpleDateFormat ("yyMMmmss");
 				Date time = new Date();
@@ -373,7 +379,7 @@ public class ResetUI implements ActionListener{
 				String fileName = uuid.substring(0,10) + time1;
 				
 		    	try {
-					createBarcodeImg(barcodeData, fileName);	// 이미지로 저장하고
+					createBarcodeImg(bt, fileName);	// 이미지로 저장하고
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
