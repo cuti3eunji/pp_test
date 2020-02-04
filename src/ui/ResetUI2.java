@@ -35,7 +35,7 @@ class JPanel01 extends JPanel { // 1번째 패널
         jScrollPane1.setSize(200, 150);
         jScrollPane1.setLocation(10, 40);
         add(jScrollPane1);
- 
+        
         jButton1.addActionListener(new MyActionListener());
     }
  

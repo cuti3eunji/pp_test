@@ -23,7 +23,7 @@ public class PrintUIWindow implements Printable, ActionListener {
 	    JFrame frameToPrint;
 
 	    public int print(Graphics g, PageFormat pf, int page) throws
-	                                                        PrinterException {
+	                                                            PrinterException {
 
 	        if (page > 0) { /* We have only one page, and 'page' is zero-based */
 	            return NO_SUCH_PAGE;
