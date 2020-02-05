@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -19,15 +18,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-//import com.zebra.sdk.comm.Connection;
+import com.zebra.sdk.comm.Connection;
 //import com.zebra.sdk.comm.ConnectionException;
 //import com.zebra.sdk.comm.TcpConnection;
 //import com.zebra.sdk.printer.PrinterLanguage;
 //import com.zebra.sdk.printer.ZebraPrinter;
 //import com.zebra.sdk.printer.ZebraPrinterFactory;
 //import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.comm.TcpConnection;
 
 import fileio.FileModify;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class BarcodeTest implements ActionListener{
 	JButton printBtn, searchBtn;
@@ -73,10 +77,23 @@ public class BarcodeTest implements ActionListener{
 		searchBtn = new JButton("확인"); //정보 검색 버튼
 		searchBtn.setPreferredSize(new Dimension(100,20));
 		
-	
+		//JDatePicker : http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component 
+		UtilDateModel model = new UtilDateModel();
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(printBtn);
 		buttonPanel.add(searchBtn);
+		buttonPanel.add(datePicker);
+		
+		datePicker.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(datePanel.getModel().getValue());
+			}
+		});
 		
 		//바코드 정보 출력
 		JPanel infoPanel = new JPanel();
@@ -199,17 +216,17 @@ public class BarcodeTest implements ActionListener{
 	
 	public void printBarcode(byte[] byteBarcode) {
 		//프린터연결
-//		Connection connection = new TcpConnection("192.168.1.154", TcpConnection.DEFAULT_ZPL_TCP_PORT);
-//		try {
-//			connection.open(); // 연결
-//
-//			connection.write(byteBarcode); // 파일인쇄
-//			
-//			connection.close(); // 연결 해제
-//			
-//		} catch (ConnectionException e) {
-//			e.printStackTrace();
-//		} 
+		Connection connection = new TcpConnection("192.168.1.154", TcpConnection.DEFAULT_ZPL_TCP_PORT);
+		try {
+			connection.open(); // 연결
+
+			connection.write(byteBarcode); // 파일인쇄
+			
+			connection.close(); // 연결 해제
+			
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 }
