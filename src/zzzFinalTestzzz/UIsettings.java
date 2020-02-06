@@ -1,10 +1,8 @@
-package ui;
+package zzzFinalTestzzz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -38,8 +36,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JSpinner.DateEditor;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -55,14 +51,12 @@ import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.comm.TcpConnection;
 
-import fileio.FileModify;
-import javafx.scene.layout.Border;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import print.ImagePrint;
 
-public class ResetUI implements ActionListener {
+public class UIsettings implements ActionListener {
 	Date today = new Date();	//오늘 날짜
 
 	Image printImage;
@@ -70,7 +64,7 @@ public class ResetUI implements ActionListener {
 	JPanel imgPanel;
 
 	JTextArea infoArea;
-	JButton createBtn, resetBtn, imgPrintBtn, lblPrintBtn, scanningBtn, searchBtn;
+	JButton createBtn, resetBtn, imgPrintBtn, lblPrintBtn, searchBtn;
 	JComboBox<String> gtinCombo;
 	JTextField gtin, exp, lot, serial; // 필수 필드
 	JTextField fullcode;
@@ -84,12 +78,17 @@ public class ResetUI implements ActionListener {
 	// 현재 프로젝트 경로가져오기
 	String rootPath = System.getProperty("user.dir");
 
-	public ResetUI() { // 생성자
+	public UIsettings() { // 생성자
 		UIsettings();
 	}
 
 	public static void main(String[] args) {
-		new ResetUI();
+		new UIsettings();
+	}
+	
+	public void setBarcode(String barcode) {
+		System.out.println("data : " + barcode);
+		fullcode.setText(barcode);
 	}
 
 	// 기본 UI 세팅
@@ -103,9 +102,7 @@ public class ResetUI implements ActionListener {
 		// ** 화면 구성
 		// inputPanel
 		JPanel inputPanel = new JPanel(); // 정보 입력 panel
-//		inputPanel.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
-		inputPanel.setBorder(
-				BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), "▶ 바코드 생성"));
+		inputPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), "▶ 바코드 생성"));
 
 		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
 
@@ -128,7 +125,7 @@ public class ResetUI implements ActionListener {
 		gtinCombo = new JComboBox<String>(prod);
 
 		gtin = new JTextField();
-		gtin.setDocument(new JTextFieldLimit(14));
+		gtin.setDocument(new TextLimit(14));
 		gtin.setEditable(false); // 수정불가능
 
 		gtinPanel.add(new JLabel("    상   품   명     "));
@@ -147,23 +144,18 @@ public class ResetUI implements ActionListener {
 		expPanel.setLayout(new BoxLayout(expPanel, BoxLayout.X_AXIS));
 
 		exp = new JTextField();
-		exp.setDocument(new JTextFieldLimit(6));
+		exp.setDocument(new TextLimit(6));
 		exp.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				datePicker.getModel().setValue(null);
 			}
-
+			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
@@ -182,7 +174,7 @@ public class ResetUI implements ActionListener {
 		lotPanel.setLayout(new BoxLayout(lotPanel, BoxLayout.X_AXIS));
 
 		lot = new JTextField();
-		lot.setDocument(new JTextFieldLimit(20));
+		lot.setDocument(new TextLimit(20));
 
 		lotPanel.add(new JLabel("제조번호 (10)  "));
 		lotPanel.add(lot);
@@ -192,7 +184,7 @@ public class ResetUI implements ActionListener {
 		serialPanel.setLayout(new BoxLayout(serialPanel, BoxLayout.X_AXIS));
 
 		serial = new JTextField();
-		serial.setDocument(new JTextFieldLimit(20));
+		serial.setDocument(new TextLimit(20));
 
 		serialPanel.add(new JLabel("일련번호 (21)  "));
 		serialPanel.add(serial);
@@ -234,7 +226,7 @@ public class ResetUI implements ActionListener {
 		imgPrintBtn.addActionListener(this);
 		lblPrintBtn.addActionListener(this);
 
-		// inputPanel과 previewPanel을 담을 leftPanel
+		// inputPanel과 previewPanel을 담을 topPanel
 		JPanel topPanel = new JPanel();
 		topPanel.setPreferredSize(new Dimension(500, 250));
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -252,14 +244,11 @@ public class ResetUI implements ActionListener {
 		fullcode = new JTextField();
 		fullcode.setEditable(false);
 
-		scanningBtn = new JButton("스캐닝");
 		searchBtn = new JButton("조회");
 		
-		scanningBtn.addActionListener(this);
 		searchBtn.addActionListener(this);
 		
 		searchPanel.add(fullcode);
-		searchPanel.add(scanningBtn);
 		searchPanel.add(searchBtn); 
 
 		// 바코드 정보를 띄워 줄 패널
@@ -363,93 +352,6 @@ public class ResetUI implements ActionListener {
 						return;
 					}
 
-					///////////////////////////////////////////////////////////////////////////////////////////////////////
-//				String gtinAI = "01" + barcodeNum;
-//				String expAI = "17" + exp.getText();
-//				String lotAI = "10" + lot.getText();
-//				String serialAI = "21" + serial.getText();
-//				
-//				System.out.println("length -> " + gtinAI.length());
-//				System.out.println("length -> " + expAI.length());
-//				System.out.println("length -> " + lotAI.length());
-//				System.out.println("length -> " + serialAI.length());
-//				
-//				CharSequence st = Character.toString((char) 232);
-//				CharSequence gs = Character.toString((char) 29);         
-//				
-//				String barcode = st + "0108809999999997";
-
-//				byte fncst = (byte) 0xE8;	// 시작문자 (ASCII 232)
-//				byte separator = 0x1D; 		// 필드분리자(Separator) (ASCII 29:<GS>)
-//				
-//				byte[] buffers = barcodeNum.getBytes();
-//				
-//				System.out.println("buffers 길이 => " + buffers.length);
-//				
-//				byte[] tempbytes = new byte[buffers.length+1];
-//				tempbytes[0] = fncst;
-//				for(int i=0; i<buffers.length; i++) {
-//					tempbytes[i+1] = buffers[i];
-//				}
-//				
-//				String bt = new String(tempbytes);
-//				
-//				
-//				int newbyteLength = gtinAI.length() + expAI.length() + lotAI.length() + serialAI.length(); 
-//				byte[] newbyte = new byte[newbyteLength+2];
-//				
-//				byte[] gtinbf = gtinAI.getBytes();
-//				byte[] expbf = expAI.getBytes();
-//				byte[] lotbf = lotAI.getBytes();
-//				
-//				System.out.println(Arrays.toString(lotbf));
-//				
-//				byte[] serialbf = serialAI.getBytes();
-//				
-//				newbyte[0] = fncst;
-//				System.out.println("0newbyte -> " + Arrays.toString(newbyte));
-//				
-//				System.arraycopy(gtinbf, 0, newbyte, 1, gtinbf.length);
-//				System.out.println("1 g newbyte -> " + Arrays.toString(newbyte));
-//				
-//				System.arraycopy(expbf, 0, newbyte, gtinbf.length+1, expbf.length);
-//				System.out.println("2 u newbyte -> " + Arrays.toString(newbyte));
-//				  
-//				
-//				System.arraycopy(lotbf, 0, newbyte, expbf.length+1, lotbf.length);
-////				System.arraycopy(lotbf, 0, newbyte, expbf.length+1, lotbf.length);
-//				System.out.println("3 m newbyte -> " + Arrays.toString(newbyte));
-//				
-//				
-//				System.out.println("sep index " + (gtinbf.length + expbf.length + lotbf.length +1));
-//				newbyte[gtinbf.length + expbf.length + lotbf.length+1] = separator;
-//				System.out.println("4 sep newbyte -> " + Arrays.toString(newbyte));
-//				
-//				System.arraycopy(serialbf, 0, newbyte, gtinbf.length + expbf.length + lotbf.length+2, serialbf.length);
-//				System.out.println("5 s newbyte -> " + Arrays.toString(newbyte));
-//				
-
-//				for(int i=0; i<gtinbf.length; i++) {
-//					newbyte[i+1] = gtinbf[i];
-//				}
-//				
-
-//				정규식 : /^[!%&)(*+,-./_:;/>/</=/?a-zA-Z0-9]{1,20}$/;
-//				String str1 = “Hello World!”;
-//				
-//				// 변수 str1의 바이트 값
-//				// 72101108108111328711111410810033
-//				byte[] buffers = str1.getBytes(); 
-//
-//				// 바이트 배열 자체의 문자열 값
-//				// [B@ca0b6
-//				String buffersArrayString = buffers.toString();
-//				
-//				// 바이트 배열을 문자열로 변환한 값
-//				// Hello World!
-//				String str2 = new String(buffers);
-					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 					// 파일명 생성
 					SimpleDateFormat format = new SimpleDateFormat("yyMMmmss");
 					Date time = new Date();
@@ -514,9 +416,55 @@ public class ResetUI implements ActionListener {
 			printBarcode(barcodeChange(String.format("%014d", Long.parseLong(gtin.getText())), exp.getText(), lot.getText(), serial.getText()));
 			JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 			
-		}else if(e.getSource() == scanningBtn) { //스캐닝 버튼 입력시 인풋창 활성화
-			fullcode.setEditable(true);
-			fullcode.requestFocus();
+		}else if(e.getSource() == searchBtn) { //조회 버튼 
+			
+			if(fullcode.getText().equals(null) || fullcode.getText().length() == 0) {
+				JOptionPane.showMessageDialog(null, "바코드 스캔 후 조회해주세요.");
+				return;
+			}else {
+				String scanData = fullcode.getText();
+				
+				CharSequence st = Character.toString((char) 232);
+				CharSequence gs = Character.toString((char) 29);
+				
+//				String[] barcodeArr = scanData.split(gs.toString());
+//				System.out.println("barcode without ser = " + barcodeArr[0]);
+//				System.out.println("barcode ser = " + barcodeArr[1]);
+				
+//				System.out.println(scanData.indexOf("01"));
+				
+				System.out.println(scanData.substring(scanData.indexOf("01"), 16));
+				
+				
+				String gtinS = scanData.substring(scanData.indexOf("01")+2, 16);
+				System.out.println(gtinS);///////////////-AI
+				
+				String[] expArr = scanData.split(gtinS);
+				System.out.println(expArr.length);
+				System.out.println(expArr[1]);
+				
+				String expS = expArr[1].substring(expArr[1].indexOf("17")+2, 8);
+				System.out.println(expS);////////////-AI
+				
+				String[] lotArr = expArr[1].split(expS);
+				System.out.println(lotArr.length);
+				
+				System.out.println(lotArr[0]);
+				System.out.println(lotArr[1]);
+				
+				System.out.println("lotArr[1].contains(gs) ::: " + lotArr[1].contains(gs));
+				
+				
+//				String lotS = lotArr[1].substring(lotArr[1].indexOf("10")+2, lotArr[1].indexOf(gs.toString()));
+				String[] lotSer = lotArr[1].split(gs.toString());
+				System.out.println(lotSer.length);
+				
+				System.out.println("lotS SSS " + lotSer[0]);////////////////+AI
+				System.out.println("Ser " + lotSer[1]);///////////////////+AI
+				
+				
+			}
+			
 		}
 	}
 	public void ImagePrint(String fileName) {
@@ -553,7 +501,7 @@ public class ResetUI implements ActionListener {
 	//zebra 라벨프린터 인쇄
 	//바코드 수정
 	public byte[] barcodeChange(String gtin, String exp, String lot, String ser) {
-		String path = ResetUI.class.getResource("").getPath(); // 현재 클래스의 절대 경로를 가져온다.
+		String path = UIsettings.class.getResource("").getPath(); // 현재 클래스의 절대 경로를 가져온다.
 		File basicfile = new File(path + "zbarcodeTest.prn");	// 기본이 될 파일 경로
 		
 		String str = "";	//읽어온 파일을 저장
@@ -599,27 +547,12 @@ public class ResetUI implements ActionListener {
 	void createBarcodeImg(String barcodef, String fileName) throws Exception {
 		DataMatrix barcode = new DataMatrix();
 		
-		/*
-		 * Data Matrix Valid data char set: ASCII values 0 - 127 in accordance with the
-		 * US national version of ISO/IEC 646 ASCII values 128 - 255 in accordance with
-		 * ISO 8859-1. These are referred to as extended ASCII.
-		 * 
-		 */
 		barcode.setData(barcodef);
 
 		barcode.setDataMode(DataMatrix.M_AUTO);
 
-		// if your selected format mode doesnot have enough space to encode your data,
-		// the library will choose the right format mode for you automatically.
 		barcode.setFormatMode(DataMatrix.F_10X10);
 
-		// Set the processTilde property to true, if you want use the tilde character
-		// "~" to specify special characters in the input data. Default is false.
-		// 1-byte character: ~ddd (character value from 0 ~ 255)
-		// ASCII (with EXT): from ~000 to ~255
-		// 2-byte character: ~6ddddd (character value from 0 ~ 65535)
-		// Unicode: from ~600000 to ~665535
-		// ECI: from ~7000000 to ~7999999
 		barcode.setProcessTilde(true);
 
 		// Data Matrix Unit of Measure, pixel, cm, or inch
@@ -710,7 +643,6 @@ public class ResetUI implements ActionListener {
 		 */
 
 		Pattern reg01 = Pattern.compile("^[0-9]{14}$");
-//		Pattern reg17 = Pattern.compile("^[0-9]{6}$");
 		Pattern reg17 = Pattern.compile("^\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$");
 //		Pattern reg17 = Pattern.compile("^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01]){6}$");
 		Pattern reg1021 = Pattern.compile("^[!\"%&'()*+,-./_:;<=>?a-zA-Z0-9]{1,20}$");
@@ -764,31 +696,21 @@ public class ResetUI implements ActionListener {
 		// 1 : 기준날짜 이후
 		int compare = today.compareTo(expDate);
 		
-//		if(compare > 0 ) { //현재날짜가 비교날짜 후인 경우
-//			System.out.println("compare -> " + compare);
-//			System.out.println("현재날짜가 비교날짜 후인 경우");
-//		}else if(compare < 0) { //현재날짜가 비교날짜 전인 경우
-//			System.out.println("compare -> " + compare);
-//			System.out.println("현재날짜가 비교날짜 전인 경우");
-//		}else { //날짜 일치
-//			System.out.println("compare -> " + compare);
-//			System.out.println("당일");
-//		}
 		return compare;
 	}
 }
 
 //글자 수 제한
-class JTextFieldLimit extends PlainDocument {
+class TextLimit extends PlainDocument {
 	private int limit;
 	private boolean toUppercase = false;
 
-	JTextFieldLimit(int limit) {
+	TextLimit(int limit) {
 		super();
 		this.limit = limit;
 	}
 
-	JTextFieldLimit(int limit, boolean upper) {
+	TextLimit(int limit, boolean upper) {
 		super();
 		this.limit = limit;
 		this.toUppercase = upper;
