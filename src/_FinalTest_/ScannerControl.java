@@ -1,4 +1,4 @@
-package zzzFinalTestzzz;
+package _FinalTest_;
 
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
@@ -12,26 +12,15 @@ import jssc.SerialPortList;
  * @author Metabiz0350
  *
  */
-public class ScannerTest implements SerialPortEventListener{
-	BarcodeManage parent;
+public class ScannerControl implements SerialPortEventListener{
+	GS1DataMatrixManager parent;
 	public SerialPort serialPort;
 	
-	public ScannerTest(BarcodeManage parent) {
+	public ScannerControl(GS1DataMatrixManager parent) {
 		this.parent = parent;
 	}
 	
 	public void connect() {
-		
-		// 포트이름 확인
-		String[] portNames = SerialPortList.getPortNames();
-
-		for (String portNm : portNames) {
-			System.out.println("port : " + portNm);
-
-			if (portNm.equals("COM3")) {
-				System.out.println("스캐너 연결 완료");
-			}
-		}
 		serialPort = new SerialPort("COM3");
 
 		try {

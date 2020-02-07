@@ -60,7 +60,7 @@ import javafx.scene.layout.Border;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import print.ImagePrint;
+import print.ImagePrintTest;
 
 public class ResetUI implements ActionListener {
 	Date today = new Date();	//오늘 날짜
@@ -502,7 +502,7 @@ public class ResetUI implements ActionListener {
 				return;
 			}
 			
-			ImagePrint ip = new ImagePrint(rootPath + "\\src\\barcodeimg\\" + fileName + ".gif");
+			ImagePrintTest ip = new ImagePrintTest(rootPath + "\\src\\barcodeimg\\" + fileName + ".gif");
 			JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 		} else if (e.getSource() == lblPrintBtn) {
 			

@@ -1,4 +1,4 @@
-package print;
+package _FinalTest_;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,14 +8,13 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaSizeName;
+
 public class ImagePrint {
 	protected Image printImage;
 
-	public static void main(String[] args) {
-//		ImagePrint ip = new ImagePrint(System.getProperty("user.dir") + "\\src\\barcodeimg\\08682f64-620020955.gif");
-		ImagePrint ip = new ImagePrint("저장한 이미지 파일 경로 (프린트할 이미지 경로)");
-		System.exit(0);
-	}
 	public ImagePrint(String fileName) {
 		printImage = new javax.swing.ImageIcon(fileName).getImage(); // 이미지파일생성
 		Paper p = new Paper();
@@ -29,8 +28,13 @@ public class ImagePrint {
 		format.setPaper(p); // 페이지포맷 페이지영역설정을 인자로..
 		PrinterJob pj = PrinterJob.getPrinterJob();
 		pj.setPrintable(new MyPrintable(), format);
+		
+		//용지 설정
+		PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+	    aset.add(MediaSizeName.ISO_A4);
+		
 		try {
-			pj.print();
+			pj.print(aset);
 		} catch (PrinterException pe) {
 			System.out.println("Printingfailed : " + pe.getMessage());
 		}

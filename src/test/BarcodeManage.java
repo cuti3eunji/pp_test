@@ -1,4 +1,4 @@
-package _Final;
+package test;
 
 public class BarcodeManage {
 

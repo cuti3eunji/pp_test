@@ -1,3 +1,4 @@
+package test;
 //package zzzFinalTestzzz;
 //
 //public class BarcodeManage2  {

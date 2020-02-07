@@ -1,8 +1,9 @@
-package zzzFinalTestzzz;
+package _FinalTest_;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -10,10 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.print.PageFormat;
-import java.awt.print.Paper;
 import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,9 +52,8 @@ import com.zebra.sdk.comm.TcpConnection;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import print.ImagePrint;
 
-public class UIsettings implements ActionListener {
+public class UIControl implements ActionListener {
 	Date today = new Date();	//오늘 날짜
 
 	Image printImage;
@@ -64,6 +61,7 @@ public class UIsettings implements ActionListener {
 	JPanel imgPanel;
 
 	JTextArea infoArea;
+	JTextArea fullArea = new JTextArea();;
 	JButton createBtn, resetBtn, imgPrintBtn, lblPrintBtn, searchBtn;
 	JComboBox<String> gtinCombo;
 	JTextField gtin, exp, lot, serial; // 필수 필드
@@ -77,25 +75,36 @@ public class UIsettings implements ActionListener {
 
 	// 현재 프로젝트 경로가져오기
 	String rootPath = System.getProperty("user.dir");
+	
+	CharSequence st = Character.toString((char) 232);
+	CharSequence gs = Character.toString((char) 29);
 
-	public UIsettings() { // 생성자
+	public UIControl() { // 생성자
 		UIsettings();
 	}
 
 	public static void main(String[] args) {
-		new UIsettings();
+		new UIControl();
 	}
 	
 	public void setBarcode(String barcode) {
-		System.out.println("data : " + barcode);
-		fullcode.setText(barcode);
+		if(barcode.contains(gs)) {
+			fullcode.setText(barcode);
+			infoArea.setText("");
+		}else {
+			JOptionPane.showMessageDialog(null, "GS1-128 기반의 바코드만 조회 할 수 있습니다. ");
+			fullcode.setText("");
+			infoArea.setText("");
+			return;
+		}
+		
 	}
 
 	// 기본 UI 세팅
 	void UIsettings() {
 		// 창 크기 지정
-		Dimension dim = new Dimension(1024, 700);
-		JFrame jf = new JFrame();
+		Dimension dim = new Dimension(820, 380);
+		JFrame jf = new JFrame("GS1 DataMatrix Manager_의약품");
 
 		jf.setPreferredSize(dim);
 
@@ -105,15 +114,17 @@ public class UIsettings implements ActionListener {
 		inputPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), "▶ 바코드 생성"));
 
 		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+		inputPanel.setPreferredSize(new Dimension(350,100));
 
 		// 버튼
 		JPanel inputBtnPanel = new JPanel();
-		inputBtnPanel.setLayout(new BoxLayout(inputBtnPanel, BoxLayout.Y_AXIS));
-		inputBtnPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		inputBtnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		inputBtnPanel.setPreferredSize(new Dimension(120,100));
+		inputBtnPanel.setBorder(new EmptyBorder(30, 10, 10, 20));
 
-		createBtn = new JButton("생성하기");
-		resetBtn = new JButton("다시입력");
-
+		createBtn = new JButton("바코드 생성");
+		resetBtn = new JButton("초     기     화");
+		
 		inputBtnPanel.add(createBtn);
 		inputBtnPanel.add(resetBtn);
 
@@ -163,11 +174,12 @@ public class UIsettings implements ActionListener {
 		UtilDateModel model = new UtilDateModel();
 		datePanel = new JDatePanelImpl(model);
 		datePicker = new JDatePickerImpl(datePanel);
+		datePicker.setPreferredSize(new Dimension(150,20));
 		
 		datePicker.addActionListener(this);
 		expPanel.add(new JLabel("유효기한 (17)  "));
-		expPanel.add(datePicker);
 		expPanel.add(exp);
+		expPanel.add(datePicker);
 
 		// 제조번호 (10)
 		JPanel lotPanel = new JPanel();
@@ -189,10 +201,9 @@ public class UIsettings implements ActionListener {
 		serialPanel.add(new JLabel("일련번호 (21)  "));
 		serialPanel.add(serial);
 
+		
 		inputPanel.add(gtinPanel);
-
 		inputPanel.add(gtinP);
-
 		inputPanel.add(expPanel);
 		inputPanel.add(lotPanel);
 		inputPanel.add(serialPanel);
@@ -200,35 +211,40 @@ public class UIsettings implements ActionListener {
 		// 미리보기 패널
 		JPanel previewPanel = new JPanel(); // 미리보기
 		previewPanel.setBorder(new TitledBorder(new LineBorder(Color.black), "미리보기"));
-		previewPanel.setPreferredSize(new Dimension(400, 300));
-		previewPanel.setBackground(Color.white);
-		previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
+		previewPanel.setPreferredSize(new Dimension(280, 300));
+		previewPanel.setLayout(new BorderLayout());
 
 		imgPanel = new JPanel();
+		imgPanel.setLayout(new BorderLayout());
 		imgPanel.setPreferredSize(new Dimension(200, 150));
 
 		img = new JLabel(); // 이미지 띄울 곳
+		fullArea.setPreferredSize(new Dimension(50,50));
+		imgPanel.add(fullArea, BorderLayout.SOUTH);
 
-		imgPanel.add(img, BorderLayout.PAGE_START);
+		img.setPreferredSize(new Dimension(80,80));
+		imgPanel.add(img, BorderLayout.CENTER);
 
 		createBtn.addActionListener(this);
 
 		JPanel previewBtnPanel = new JPanel();
 		previewBtnPanel.setSize(500, 100);
+		previewBtnPanel.setLayout(new FlowLayout());
+		
 		imgPrintBtn = new JButton("이미지인쇄");
-		lblPrintBtn = new JButton("라벨프린터인쇄");
-		previewBtnPanel.add(imgPrintBtn, BorderLayout.PAGE_END);
-		previewBtnPanel.add(lblPrintBtn, BorderLayout.PAGE_END);
+		lblPrintBtn = new JButton("라벨프린터인쇄");  
+		previewBtnPanel.add(imgPrintBtn);
+		previewBtnPanel.add(lblPrintBtn);
 
-		previewPanel.add(imgPanel);
-		previewPanel.add(previewBtnPanel);
+		previewPanel.add(imgPanel, BorderLayout.CENTER);
+		previewPanel.add(previewBtnPanel, BorderLayout.SOUTH);
 
 		imgPrintBtn.addActionListener(this);
 		lblPrintBtn.addActionListener(this);
 
 		// inputPanel과 previewPanel을 담을 topPanel
 		JPanel topPanel = new JPanel();
-		topPanel.setPreferredSize(new Dimension(500, 250));
+		topPanel.setPreferredSize(new Dimension(300, 170));
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		topPanel.add(inputPanel);
@@ -238,8 +254,7 @@ public class UIsettings implements ActionListener {
 		// 풀코드 입력할 패널
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
-		searchPanel.setBorder(
-				BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), "▶ 바코드 조회 (스캐너를 사용해주세요)"));
+		searchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), "▶ 바코드 조회 (스캐너를 사용해주세요)"));
 
 		fullcode = new JTextField();
 		fullcode.setEditable(false);
@@ -256,7 +271,7 @@ public class UIsettings implements ActionListener {
 
 		infoArea = new JTextArea();
 		infoArea.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		infoArea.setPreferredSize(new Dimension(1000, 350));
+		infoArea.setPreferredSize(new Dimension(790, 120));
 		infoPanel.add(infoArea);
 
 		JPanel bottomPanel = new JPanel();
@@ -273,7 +288,7 @@ public class UIsettings implements ActionListener {
 		jf.add(topPanel, BorderLayout.NORTH);
 		jf.add(bottomPanel, BorderLayout.CENTER);
 		jf.pack();
-		jf.setResizable(false); // 창의 크기 변경 불가
+//		jf.setResizable(false); // 창의 크기 변경 불가
 		jf.setVisible(true); // 보이게
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫을 시 프로그램(JFrame)이 정상 종료 되도록 함
 		jf.setLocationRelativeTo(null); // 창을 가운데에 띄우기
@@ -323,19 +338,16 @@ public class UIsettings implements ActionListener {
 				img.setIcon(new ImageIcon());
 				saveName.setText("");
 				datePicker.getModel().setValue(null);
+				
+				if(fullArea.getText().length() != 0) {
+					fullArea.setText("");
+				}
 
 		} else if (e.getSource() == createBtn) { // 바코드 생성
 			saveName = new JLabel();
 			saveName.setText("");
 			
-			//유효기간 필드가 비어있으면
-			if(exp.getText() == null || exp.getText().equals("") || datePicker.getModel().getValue() == null) {
-				JOptionPane.showMessageDialog(null, "유효기한은 YYMMDD형식의 6자리입니다.");
-				return;
-			}
 			barcodeNum = gtin.getText().trim();
-			
-
 			// 공백검사
 			if (inputNullCheck(gtin.getText(), exp.getText(), lot.getText(), serial.getText())) { // 자릿수 + 널체크
 
@@ -346,16 +358,30 @@ public class UIsettings implements ActionListener {
 				// 정규식검사
 				if (regCheck(barcodeNum, exp.getText(), lot.getText(), serial.getText())) {
 					int chkSum = checkDigit(barcodeNum);
-
-					if (String.valueOf(chkSum).equals(barcodeNum.charAt(barcodeNum.length() - 1))) {
+					
+					if (!String.valueOf(chkSum).equals(String.valueOf(barcodeNum.charAt(barcodeNum.length() - 1)))) {
 						JOptionPane.showMessageDialog(null, "잘못된 바코드 입니다. 다시 입력해주세요.");
 						return;
 					}
-
+					
+					SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+					int compare = 0;
+					try {
+						compare = dateCheck(today, format.parse(exp.getText()));
+					} catch (ParseException e2) {
+						e2.printStackTrace();
+					}
+					if(compare > 0 || compare == 0) {
+						JOptionPane.showMessageDialog(null, "현재 이후 날짜만 입력 할 수 있습니다. 다시 입력해주세요.");
+						datePicker.getModel().setValue(null);
+						exp.setText("");
+						return;
+					}
+					
 					// 파일명 생성
-					SimpleDateFormat format = new SimpleDateFormat("yyMMmmss");
+					SimpleDateFormat fnformat = new SimpleDateFormat("yyMMmmss");
 					Date time = new Date();
-					String time1 = format.format(time);
+					String time1 = fnformat.format(time);
 
 					String uuid = UUID.randomUUID().toString();
 					fileName = uuid.substring(0, 10) + time1;
@@ -365,7 +391,8 @@ public class UIsettings implements ActionListener {
 					String lotAI = "10" + lot.getText();
 					String serialAI = "21" + serial.getText();
 					
-					String gg = "(01)"+barcodeNum+"(17)"+exp.getText()+"(10)"+lot.getText()+"(21)"+serial.getText();
+					//AI 포함된 코드
+					String fullcodepAI = "(01)"+barcodeNum+" (17)"+exp.getText()+"\n(10)"+lot.getText()+"\n(21)"+serial.getText();
 					
 					barcodeNum = gtinAI + expAI + lotAI + serialAI;
 					
@@ -379,17 +406,14 @@ public class UIsettings implements ActionListener {
 					ImageIcon icon = new ImageIcon(rootPath + "\\src\\barcodeimg\\" + fileName + ".gif"); // 이미지 아이콘 객체 생성
 
 					// 이미지를 실제로 갖고 있는 Image객체 뽑아오기
-					Image im = icon.getImage(); // 뽑아온 이미지 객체 사이즈를 새롭게 만들기!
-					Image im2 = im.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+					Image im = icon.getImage(); // 뽑아온 이미지 객체 사이즈를 새롭게 만들기
+					Image im2 = im.getScaledInstance(60, 60, Image.SCALE_DEFAULT);
 
 					// 새로 조절된 사이즈의 이미지(im2)를 가지는 ImageIcon 객체를 다시 생성
 					ImageIcon icon2 = new ImageIcon(im2);
 					img.setIcon(icon2);
 
-					saveName.setText(gg);
-					JTextArea jj = new JTextArea(gg);
-					jj.setPreferredSize(new Dimension(150,80));
-					imgPanel.add(jj, BoxLayout.Y_AXIS);
+					fullArea.setText(fullcodepAI);
 					
 					JOptionPane.showMessageDialog(null, "바코드가 생성되었습니다.");
 				}
@@ -399,22 +423,24 @@ public class UIsettings implements ActionListener {
 
 		} else if (e.getSource() == imgPrintBtn) { // 이미지 인쇄 버튼
 			
-			if(img.getIcon() == null) {
+			if(fullArea.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "바코드를 먼저 생성해 주세요.");
 				return;
+			}else {
+				ImagePrint ip = new ImagePrint(rootPath + "\\src\\barcodeimg\\" + fileName + ".gif");
+				JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 			}
 			
-			ImagePrint ip = new ImagePrint(rootPath + "\\src\\barcodeimg\\" + fileName + ".gif");
-			JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 		} else if (e.getSource() == lblPrintBtn) {
 			
-			if(img.getIcon() == null) {
+			if(fullArea.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "바코드를 먼저 생성해 주세요.");
 				return;
+			}else {
+				// 받아온 정보로 바코드 출력하기
+				printBarcode(barcodeChange(String.format("%014d", Long.parseLong(gtin.getText())), exp.getText(), lot.getText(), serial.getText()));
+				JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 			}
-			// 받아온 정보로 바코드 출력하기
-			printBarcode(barcodeChange(String.format("%014d", Long.parseLong(gtin.getText())), exp.getText(), lot.getText(), serial.getText()));
-			JOptionPane.showMessageDialog(null, "인쇄가 완료되었습니다.");
 			
 		}else if(e.getSource() == searchBtn) { //조회 버튼 
 			
@@ -424,84 +450,36 @@ public class UIsettings implements ActionListener {
 			}else {
 				String scanData = fullcode.getText();
 				
-				CharSequence st = Character.toString((char) 232);
-				CharSequence gs = Character.toString((char) 29);
-				
-//				String[] barcodeArr = scanData.split(gs.toString());
-//				System.out.println("barcode without ser = " + barcodeArr[0]);
-//				System.out.println("barcode ser = " + barcodeArr[1]);
-				
-//				System.out.println(scanData.indexOf("01"));
-				
-				System.out.println(scanData.substring(scanData.indexOf("01"), 16));
-				
-				
 				String gtinS = scanData.substring(scanData.indexOf("01")+2, 16);
-				System.out.println(gtinS);///////////////-AI
+				System.out.println("gtin " + gtinS);///////////////-AI
+				
+				infoArea.setText("표준코드 (01) : " + gtinS);
 				
 				String[] expArr = scanData.split(gtinS);
-				System.out.println(expArr.length);
-				System.out.println(expArr[1]);
 				
 				String expS = expArr[1].substring(expArr[1].indexOf("17")+2, 8);
-				System.out.println(expS);////////////-AI
+				System.out.println("exp " + expS);////////////-AI
+				
+				infoArea.append("\n유효기한 (17) : " + expS) ;
 				
 				String[] lotArr = expArr[1].split(expS);
-				System.out.println(lotArr.length);
 				
-				System.out.println(lotArr[0]);
-				System.out.println(lotArr[1]);
-				
-				System.out.println("lotArr[1].contains(gs) ::: " + lotArr[1].contains(gs));
-				
-				
-//				String lotS = lotArr[1].substring(lotArr[1].indexOf("10")+2, lotArr[1].indexOf(gs.toString()));
 				String[] lotSer = lotArr[1].split(gs.toString());
-				System.out.println(lotSer.length);
+				System.out.println("lot " + lotSer[0]);////////////////+AI
+				System.out.println("ser " + lotSer[1]);///////////////////+AI
 				
-				System.out.println("lotS SSS " + lotSer[0]);////////////////+AI
-				System.out.println("Ser " + lotSer[1]);///////////////////+AI
+				infoArea.append("\n제조번호 (10) : " + lotSer[0].substring(2));
+				infoArea.append("\n일련번호 (21) : " + lotSer[1].substring(2));
 				
 				
 			}
 			
 		}
 	}
-	public void ImagePrint(String fileName) {
-		printImage = new javax.swing.ImageIcon(fileName).getImage(); // 이미지파일생성
-		Paper p = new Paper();
-
-		// 출력될 영역 설정
-		p.setImageableArea(1 * 72, // Left margin 1 inch //for mm 0.0395
-						1.5 * 72, // Top margin 1.5 inches
-						6.5 * 72, // Width 6.5 inches
-						8 * 72); // Height 8 inches
-		PageFormat format = new PageFormat();
-		format.setPaper(p); // 페이지포맷 페이지영역설정을 인자로..
-		PrinterJob pj = PrinterJob.getPrinterJob();
-		pj.setPrintable(new MyPrintable(), format);
-		try {
-			pj.print();
-		} catch (PrinterException pe) {
-			System.out.println("Printingfailed : " + pe.getMessage());
-		}
-	}
-	class MyPrintable implements Printable {
-		public int print(Graphics g, PageFormat pf, int pageIndex) {
-			g.translate((int) (pf.getImageableX()), (int) (pf.getImageableY()));
-
-			if (pageIndex == 0) {
-				g.drawImage(printImage, 0, 0, null);
-				return Printable.PAGE_EXISTS;
-			}
-			return Printable.NO_SUCH_PAGE;
-		}
-	}
-	
 	//zebra 라벨프린터 인쇄
 	//바코드 수정
 	public byte[] barcodeChange(String gtin, String exp, String lot, String ser) {
-		String path = UIsettings.class.getResource("").getPath(); // 현재 클래스의 절대 경로를 가져온다.
+		String path = UIControl.class.getResource("").getPath(); // 현재 클래스의 절대 경로를 가져온다.
 		File basicfile = new File(path + "zbarcodeTest.prn");	// 기본이 될 파일 경로
 		
 		String str = "";	//읽어온 파일을 저장
@@ -578,7 +556,7 @@ public class UIsettings implements ActionListener {
 		if (gtin.equals("") || exp.equals("") || lot.equals("") || serial.equals("")) {
 			JOptionPane.showMessageDialog(null, "필수 입력 사항을 모두 입력해주세요.");
 			return false;
-		} else if (exp.length() != 6 || exp.length()==0 && datePicker.getModel().getValue() == null) { // 고정 값 확인 (날짜)
+		} else if (exp.length() != 6 || exp.equals("") && datePicker.getModel().getValue() == null) { // 고정 값 확인 (날짜)
 			JOptionPane.showMessageDialog(null, "유효기한은 YYMMDD 형식의 6자리 입니다. \n 다시 확인해주세요.");
 			return false;
 		} else if (gtin.length() != 13 && gtin.length() != 14) {
