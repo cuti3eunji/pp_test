@@ -245,11 +245,11 @@ public class UIControl implements ActionListener {
 		// inputPanel과 previewPanel을 담을 topPanel
 		JPanel topPanel = new JPanel();
 		topPanel.setPreferredSize(new Dimension(300, 170));
-		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		topPanel.setLayout(new BorderLayout());
 
-		topPanel.add(inputPanel);
-		topPanel.add(inputBtnPanel);
-		topPanel.add(previewPanel);
+		topPanel.add(inputPanel, BorderLayout.WEST);
+		topPanel.add(inputBtnPanel, BorderLayout.CENTER);
+		topPanel.add(previewPanel, BorderLayout.EAST);
 
 		// 풀코드 입력할 패널
 		JPanel searchPanel = new JPanel();
@@ -271,14 +271,15 @@ public class UIControl implements ActionListener {
 
 		infoArea = new JTextArea();
 		infoArea.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		infoArea.setPreferredSize(new Dimension(790, 120));
+		double frameWidth = jf.getPreferredSize().getWidth();
+		infoArea.setPreferredSize(new Dimension((int)frameWidth,120));
 		infoPanel.add(infoArea);
 
 		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+		bottomPanel.setLayout(new BorderLayout());
 
-		bottomPanel.add(searchPanel);
-		bottomPanel.add(infoPanel);
+		bottomPanel.add(searchPanel, BorderLayout.NORTH);
+		bottomPanel.add(infoPanel, BorderLayout.CENTER);
 
 		// 화면 구성 **
 
