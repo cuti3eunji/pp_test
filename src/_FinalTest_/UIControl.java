@@ -92,7 +92,7 @@ public class UIControl implements ActionListener {
 			fullcode.setText(barcode);
 			infoArea.setText("");
 		}else {
-			JOptionPane.showMessageDialog(null, "GS1-128 기반의 바코드만 조회 할 수 있습니다. ");
+			JOptionPane.showMessageDialog(null, "GS1  바코드만 조회 할 수 있습니다. ");
 			fullcode.setText("");
 			infoArea.setText("");
 			return;
@@ -449,30 +449,88 @@ public class UIControl implements ActionListener {
 				JOptionPane.showMessageDialog(null, "바코드 스캔 후 조회해주세요.");
 				return;
 			}else {
+				infoArea.setText("");
 				String scanData = fullcode.getText();
 				
-				String gtinS = scanData.substring(scanData.indexOf("01")+2, 16);
-				System.out.println("gtin " + gtinS);///////////////-AI
+				//맨앞 AI 확인
+				String firAI = scanData.substring(0,2);
+				String fir = null;
 				
-				infoArea.setText("표준코드 (01) : " + gtinS);
+				if(firAI.equals("01")) { //(01)이면 : GTIN
+					fir = scanData.substring(2,16);
+				}else if(firAI.equals("17")) { //(17)이면 : exp
+					fir = scanData.substring(2,8);
+				}else if(firAI.equals("10") || firAI.equals("21")) { //가변이면
+					String[] aa = scanData.split(gs.toString());
+					fir = aa[0].substring(2);
+				}
 				
-				String[] expArr = scanData.split(gtinS);
+				//두번째 AI확인
+				String[] secArr = scanData.split(fir);
+				String secAI = secArr[1].startsWith(gs.toString()) ? secArr[1].substring(1,3) : secArr[1].substring(0,2);
+				String sec = null;
 				
-				String expS = expArr[1].substring(expArr[1].indexOf("17")+2, 8);
-				System.out.println("exp " + expS);////////////-AI
+				if(secAI.equals("01")) { //(01)이면 : GTIN
+					sec = secArr[1].startsWith(gs.toString()) ? secArr[1].substring(3,17) : secArr[1].substring(2,16);
+				}else if(secAI.equals("17")) { //(17)이면 : exp
+					sec = secArr[1].startsWith(gs.toString()) ? secArr[1].substring(3,9) : secArr[1].substring(2,8);
+				}else if(secAI.equals("10") || secAI.equals("21")) { //가변이면
+					String[] aa = secArr[1].startsWith(gs.toString()) ? secArr[1].substring(1).split(gs.toString()) : secArr[1].split(gs.toString());
+					sec = aa[0].substring(2);
+				}
 				
-				infoArea.append("\n유효기한 (17) : " + expS) ;
+				//세번째 AI확인
+				String[] thiArr = scanData.split(sec);
+				String thiAI = thiArr[1].startsWith(gs.toString()) ? thiArr[1].substring(1,3) : thiArr[1].substring(0,2);
+				String thi = null;
 				
-				String[] lotArr = expArr[1].split(expS);
+				if(thiAI.equals("01")) { //(01)이면 : GTIN
+					thi = thiArr[1].startsWith(gs.toString()) ? thiArr[1].substring(3,17) : thiArr[1].substring(2,16);
+				}else if(thiAI.equals("17")) { //(17)이면 : exp
+					thi = thiArr[1].startsWith(gs.toString()) ? thiArr[1].substring(3,9) : thiArr[1].substring(2,8);
+				}else if(thiAI.equals("10") || thiAI.equals("21")) { //가변이면
+					String[] aa = thiArr[1].startsWith(gs.toString()) ? thiArr[1].substring(1).split(gs.toString()) : thiArr[1].split(gs.toString());
+					thi = aa[0].substring(2);
+				}
 				
-				String[] lotSer = lotArr[1].split(gs.toString());
-				System.out.println("lot " + lotSer[0]);////////////////+AI
-				System.out.println("ser " + lotSer[1]);///////////////////+AI
+				//세번째 AI확인
+				String[] fourArr = scanData.split(thi);
+				String fourAI = fourArr[1].startsWith(gs.toString()) ? fourArr[1].substring(1,3) : fourArr[1].substring(0,2);
+				String four = null;
 				
-				infoArea.append("\n제조번호 (10) : " + lotSer[0].substring(2));
-				infoArea.append("\n일련번호 (21) : " + lotSer[1].substring(2));
+				if(fourAI.equals("01")) { //(01)이면 : GTIN
+					four = fourArr[1].startsWith(gs.toString()) ? fourArr[1].substring(3,17) : fourArr[1].substring(2,16);
+					
+				}else if(fourAI.equals("17")) { //(17)이면 : exp
+					
+					four = fourArr[1].startsWith(gs.toString()) ? fourArr[1].substring(3,9) : fourArr[1].substring(2,8);
+					
+				}else if(fourAI.equals("10") || fourAI.equals("21")) { //가변이면
+					
+					String[] aa = fourArr[1].startsWith(gs.toString()) ? fourArr[1].substring(1).split(gs.toString()) : fourArr[1].split(gs.toString());
+					
+					four = aa[0].substring(2);
+				}
+
+//				infoArea.append("표준코드 (01) : " + fir);
+//				infoArea.append("\n유효기한 (17) : " + sec) ;
+//				infoArea.append("\n제조번호 (10) : " + thi);
+//				infoArea.append("\n일련번호 (21) : " + four);
 				
+				String[] aiArr = {firAI, secAI, thiAI, fourAI};
+				String[] dataArr = {fir, sec, thi, four};
 				
+				for(int i=0; i<aiArr.length; i++) {
+					if(aiArr[i].equals("01")){
+						infoArea.append("표준코드 (01) : " + dataArr[i] + "\n");
+					}else if(aiArr[i].equals("17")) {
+						infoArea.append("유효기한 (17) : " + dataArr[i] + "\n");
+					}else if(aiArr[i].equals("10")) {
+						infoArea.append("제조번호 (10) : " + dataArr[i] + "\n");
+					}else if(aiArr[i].equals("21")) {
+						infoArea.append("일련번호 (21) : " + dataArr[i] + "\n");
+					}
+				}
 			}
 			
 		}

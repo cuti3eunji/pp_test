@@ -21,14 +21,22 @@ public class ScannerControl implements SerialPortEventListener{
 	}
 	
 	public void connect() {
-		serialPort = new SerialPort("COM3");
-
-		try {
-			serialPort.openPort(); // Open serial port
-			serialPort.addEventListener(this);
-		} catch (SerialPortException e) {
-			e.printStackTrace();
+		//포트이름 확인 
+		String[] portNames = SerialPortList.getPortNames();
+		for (int i = 0; i < portNames.length; i++) {
+			if(portNames[i].equals("COM3")) {
+				System.out.println("===== [COM3]포트 연결 =====");
+				serialPort = new SerialPort("COM3");
+				
+				try {
+					serialPort.openPort(); // Open serial port
+					serialPort.addEventListener(this);
+				} catch (SerialPortException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 	}
 
 	@Override

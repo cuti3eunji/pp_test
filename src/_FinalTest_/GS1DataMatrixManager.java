@@ -11,10 +11,7 @@ public class GS1DataMatrixManager {
 	
 	private void connectScanner() {
 		ScannerControl st = new ScannerControl(this);
-		System.out.println(st.serialPort);
-		if(st.serialPort != null) {
-			st.connect();
-		}
+		st.connect();
 	}
 
 	public static void main(String[] args) {
