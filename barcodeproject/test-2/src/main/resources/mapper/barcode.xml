@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bacode.hi.dao.BarcodeDao">
+	
+
+	<insert id="insertBarcode" parameterType="com.bacode.hi.vo.BarcodeVO">
+
+		INSERT INTO BARCODE
+		( BAR_CODE,MA_CODE,BAR_EXP,BAR_LOT,BAR_SERIAL)
+		VALUES (#{bar_code},#{ma_code},#{bar_exp},#{bar_lot},#{bar_serial} )
+	</insert>
+
+
+</mapper>
