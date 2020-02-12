@@ -415,7 +415,7 @@ public class UIControl implements ActionListener {
 					fileName = uuid.substring(0, 10) + time1;
 					
 					String gtinAI = "01" + barcodeNum;
-					String expAI = "17" + exp.getText();
+					String expAI = "17" + exp.getText();  
 					String lotAI = "10" + lot.getText();
 					String serialAI = "21" + serial.getText();
 					

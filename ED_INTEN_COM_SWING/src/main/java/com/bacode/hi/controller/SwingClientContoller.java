@@ -3,7 +3,7 @@ package com.bacode.hi.controller;
 public class SwingClientContoller {
 	
 	private UIControl ui;
-
+ 
 	public SwingClientContoller() {
 		
 		ui = new UIControl();
